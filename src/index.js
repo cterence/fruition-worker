@@ -186,7 +186,7 @@ async function fetchAndApply(request) {
     const pageId = SLUG_TO_PAGE[url.pathname.slice(1)];
     return Response.redirect("https://" + MY_DOMAIN + "/" + pageId, 301);
   } else {
-    return Response.redirect("https://" + MY_DOMAIN, 301);
+    // return Response.redirect("https://" + MY_DOMAIN, 301);
     response = await fetch(url.toString(), {
       body: request.body,
       headers: request.headers,
