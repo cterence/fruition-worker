@@ -47,7 +47,9 @@ const CUSTOM_SCRIPT = `
   const widthObserver = new MutationObserver(callback);
 
   // Start observing the target node for configured mutations
-  widthObserver.observe(targetNode, config);
+  for (const targetNode of targetNodes) {
+    widthObserver.observe(targetNode, config);
+  }
   console.log('Custom script executed');
   </script>
   `;
