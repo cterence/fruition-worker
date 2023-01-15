@@ -216,8 +216,8 @@ class HeadRewriter {
       div.notion-topbar > div > div:nth-child(6) { display: none !important; }
       div.notion-topbar-mobile > div:nth-child(3) { display: none !important; }
       div.notion-topbar-mobile > div:nth-child(4) { display: none !important; }
-      div.notion-topbar > div > div:nth-child(1n).toggle-mode { display: flex !important; }
-      div.notion-topbar-mobile > div:nth-child(1n).toggle-mode { display: flex !important; }
+      div.notion-topbar > div > div:nth-child(1n).toggle-mode { display: flex !important; align-items: center; }
+      div.notion-topbar-mobile > div:nth-child(1n).toggle-mode { display: flex !important; align-items: center; }
       </style>`,
       {
         html: true,
