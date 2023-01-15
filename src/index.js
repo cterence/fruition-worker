@@ -37,7 +37,7 @@ const CUSTOM_SCRIPT = `
 
   // Callback function to execute when mutations are observed
   const callback = (mutationList, observer) => {
-    console.log('Custom script executed');; 
+    console.log('mutation');
     for (const mutation of mutationList) {
       targetNode.style.width = '1200px'
     }
@@ -48,6 +48,7 @@ const CUSTOM_SCRIPT = `
 
   // Start observing the target node for configured mutations
   observer.observe(targetNode, config);
+  console.log('Custom script executed');
   </script>
   `;
 
