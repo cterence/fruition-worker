@@ -1,10 +1,12 @@
 # Fruition worker
 
-![.](https://github.com/cterence/fruition-worker/actions/workflows/deploy.yaml/badge.svg)
+![cicd-badge](https://github.com/cterence/fruition-worker/actions/workflows/deploy.yaml/badge.svg)
 
-My own Cloudflare worker to help me hosting my own personal site : https://www.terence.cloud
+Cloudflare worker code for hosting my personal site : https://www.terence.cloud.
 
-For more info, visit https://fruitionsite.com/
+The worker is automatically redeployed after each push on main (I know, I'm crazy like that).
+
+For more info, visit https://fruitionsite.com/ which is the main source of this code.
 
 ## Mods
 
