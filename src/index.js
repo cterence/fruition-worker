@@ -26,39 +26,20 @@ const GOOGLE_FONT = "Source Sans Pro";
 const CUSTOM_SCRIPT = `
   // Custom script
   <script>
-  // Select the node that will be observed for mutations
-  const widthAdapter = () => {
-    setTimeout(
-      () => {
-        const targetNodes = [
-          document.evaluate('//main/div', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue,
-          document.evaluate('//div[@class = "notion-frame"]/div/div/div', document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(1)
-        ];
-    
-    
-        // Callback function to execute when mutations are observed
-        const callback = (mutationList, observer) => {
-          console.log('mutation');
-          for (const targetNode of targetNodes) {
-            targetNode.style.width = '1200px'
-          }
-        };
-    
-        // Create an observer instance linked to the callback function
-        const widthObserver = new MutationObserver(callback);
-    
-        // Start observing the target node for configured mutations
-        for (const targetNode of targetNodes) {
-          widthObserver.observe(targetNode, { attributes: true, childList: true, subtree: true });
-        }
-        console.log('Custom script executed');
-      }, "2000"
-    )
-  }
-  
-  addEventListener('locationchanged', widthAdapter)
-  addEventListener('load', widthAdapter)
-  </script>
+  // Callback function to execute when mutations are observed
+  const callback = (mutationList, observer) => {
+    document.evaluate('//main/div', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.style.width = '1200px'
+    document.evaluate('//div[@class = "notion-frame"]/div/div/div', document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(1).style.width = '1200px'
+  };
+
+  // Create an observer instance linked to the callback function
+  const widthObserver = new MutationObserver(callback);
+
+  // Start observing the target node for configured mutations
+  // for (const targetNode of targetNodes) {
+  //   widthObserver.observe(targetNode, { attributes: true, childList: true, subtree: true });
+  // }
+  widthObserver.observe(document.body, { attributes: true, childList: true, subtree: true });
   `;
 
 /* CONFIGURATION ENDS HERE */
