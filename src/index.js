@@ -27,7 +27,7 @@ const CUSTOM_SCRIPT = `
   // Custom script
   <script>
   // Select the node that will be observed for mutations
-  addEventListener('load', (event) => {
+  const widthAdapter = () => {
     setTimeout(
       () => {
         const targetNodes = [
@@ -54,7 +54,10 @@ const CUSTOM_SCRIPT = `
         console.log('Custom script executed');
       }, "2000"
     )
-  })
+  }
+  
+  addEventListener('locationchanged', widthAdapter)
+  addEventListener('load', widthAdapter)
   </script>
   `;
 
