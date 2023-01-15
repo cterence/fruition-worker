@@ -44,10 +44,10 @@ const CUSTOM_SCRIPT = `
   };
 
   // Create an observer instance linked to the callback function
-  const observer = new MutationObserver(callback);
+  const widthObserver = new MutationObserver(callback);
 
   // Start observing the target node for configured mutations
-  observer.observe(targetNode, config);
+  widthObserver.observe(targetNode, config);
   console.log('Custom script executed');
   </script>
   `;
