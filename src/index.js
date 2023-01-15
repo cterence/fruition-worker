@@ -146,10 +146,8 @@ async function fetchAndApply(request) {
       `;
     }
     return new Response(
-      `
-      User-agent: *
+      `User-agent: *
       ${disallowList}
-
       Sitemap: https://${MY_DOMAIN}/sitemap.xml`.replace(/  +/g, "")
     );
   }
