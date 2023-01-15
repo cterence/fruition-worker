@@ -1,0 +1,5 @@
+name = "fruition"
+main = "src/index.js"
+compatibility_date = "2023-01-15"
+
+route = { pattern = "www.terence.cloud/*", zone_name = "terence.cloud" }

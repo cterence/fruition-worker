@@ -1,0 +1,23 @@
+{
+  "name": "fruition-worker",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "wrangler": "^2.7.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "wrangler publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cterence/fruition-worker.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cterence/fruition-worker/issues"
+  },
+  "homepage": "https://github.com/cterence/fruition-worker#readme",
+  "description": ""
+}
