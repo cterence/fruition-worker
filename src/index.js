@@ -28,16 +28,19 @@ const CUSTOM_SCRIPT = `
   <script>
   // Observe body for changes after page loads, resize the content to newSize (900px normally)
   addEventListener('load', () => {
-    const newSize = '1200px'
-    const callback = (mutationList, observer) => {
-      // Title
-      document.evaluate('//div[@class = "notion-frame"]/div/div/div', document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(1).style.width = newSize
-      // Content
-      document.evaluate('//main/div', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.style.width = newSize
-    };
-  
-    const widthObserver = new MutationObserver(callback);
-    widthObserver.observe(document.body, { attributes: true, childList: true, subtree: true });
+    // Prevent execution on mobile devices
+    if ("ontouchstart" in document.documentElement) {
+      const newSize = '1200px'
+      const callback = (mutationList, observer) => {
+        // Title
+        document.evaluate('//div[@class = "notion-frame"]/div/div/div', document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(1).style.width = newSize
+        // Content
+        document.evaluate('//main/div', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.style.width = newSize
+      };
+    
+      const widthObserver = new MutationObserver(callback);
+      widthObserver.observe(document.body, { attributes: true, childList: true, subtree: true });
+    } 
   })
   </script>
   `;
@@ -102,11 +105,9 @@ async function fetchAndApply(request) {
   let url = new URL(request.url);
   url.hostname = "www.notion.so";
   if (url.pathname === "/robots.txt") {
+    // Added configuration for robots.txt here
     return new Response(
-      `Sitemap: https://${MY_DOMAIN}/sitemap.xml
-      Host: https://${MY_DOMAIN}
-      User-agent: *
-      Allow: /`.replace(/  +/g, "")
+      `Sitemap: https://${MY_DOMAIN}/sitemap.xml`.replace(/  +/g, "")
     );
   }
   if (url.pathname === "/sitemap.xml") {
