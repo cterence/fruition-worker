@@ -26,13 +26,19 @@ const GOOGLE_FONT = "Source Sans Pro";
 const CUSTOM_SCRIPT = `
   // Custom script
   <script>
-  const callback = (mutationList, observer) => {
-    document.evaluate('//div[@class = "notion-frame"]/div/div/div', document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(1).style.width = '1200px'
-    document.evaluate('//main/div', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.style.width = '1200px'
-  };
-
-  const widthObserver = new MutationObserver(callback);
-  widthObserver.observe(document.body, { attributes: true, childList: true, subtree: true });
+  // Observe body for changes after page loads, resize the content to newSize (900px normally)
+  addEventListener('load', () => {
+    const newSize = '1200px'
+    const callback = (mutationList, observer) => {
+      // Title
+      document.evaluate('//div[@class = "notion-frame"]/div/div/div', document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(1).style.width = newSize
+      // Content
+      document.evaluate('//main/div', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.style.width = newSize
+    };
+  
+    const widthObserver = new MutationObserver(callback);
+    widthObserver.observe(document.body, { attributes: true, childList: true, subtree: true });
+  })
   </script>
   `;
 
