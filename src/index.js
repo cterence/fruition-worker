@@ -45,6 +45,40 @@ const CUSTOM_SCRIPT = `
   </script>
   `;
 
+// https://github.com/stephenou/fruitionsite/issues/162
+const EXCLUDE_PATHNAMES = [
+  "/about",
+  "/blog",
+  "/careers",
+  "/confluence",
+  "/contact-sales",
+  "/customers",
+  "/desktop",
+  "/educators",
+  "/enterprise",
+  "/evernote",
+  "/guides",
+  "/help",
+  "/login",
+  "/mobile",
+  "/nonprofits",
+  "/notes",
+  "/pages",
+  "/personal",
+  "/pricing",
+  "/product",
+  "/projects",
+  "/remote",
+  "/security",
+  "/signup",
+  "/startups",
+  "/students",
+  "/teams",
+  "/templates",
+  "/web-clipper",
+  "/wikis",
+];
+
 /* CONFIGURATION ENDS HERE */
 
 const PAGE_TO_SLUG = {};
@@ -111,6 +145,11 @@ async function fetchAndApply(request) {
     );
   }
   if (url.pathname === "/sitemap.xml") {
+    for (const path of EXCLUDE_PATHNAMES) {
+      if (url.pathname.startsWith(path)) {
+        return Response.redirect("https://" + MY_DOMAIN + "/", 301);
+      }
+    }
     let response = new Response(generateSitemap());
     response.headers.set("content-type", "application/xml");
     return response;
@@ -147,6 +186,7 @@ async function fetchAndApply(request) {
     const pageId = SLUG_TO_PAGE[url.pathname.slice(1)];
     return Response.redirect("https://" + MY_DOMAIN + "/" + pageId, 301);
   } else {
+    return Response.redirect("https://" + MY_DOMAIN, 301);
     response = await fetch(url.toString(), {
       body: request.body,
       headers: request.headers,
