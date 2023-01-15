@@ -27,30 +27,30 @@ const CUSTOM_SCRIPT = `
   // Custom script
   <script>
   // Select the node that will be observed for mutations
-  const targetNodes = [
-    document.evaluate('//main/div', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue,
-    document.evaluate('//div[@class = "notion-frame"]/div/div/div', document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(1)
-  ];
+  addEventListener('load', (event) => {
+    const targetNodes = [
+      document.evaluate('//main/div', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue,
+      document.evaluate('//div[@class = "notion-frame"]/div/div/div', document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(1)
+    ];
 
-  // Options for the observer (which mutations to observe)
-  const config = { attributes: true, childList: true, subtree: true };
 
-  // Callback function to execute when mutations are observed
-  const callback = (mutationList, observer) => {
-    console.log('mutation');
+    // Callback function to execute when mutations are observed
+    const callback = (mutationList, observer) => {
+      console.log('mutation');
+      for (const targetNode of targetNodes) {
+        targetNode.style.width = '1200px'
+      }
+    };
+
+    // Create an observer instance linked to the callback function
+    const widthObserver = new MutationObserver(callback);
+
+    // Start observing the target node for configured mutations
     for (const targetNode of targetNodes) {
-      targetNode.style.width = '1200px'
+      widthObserver.observe(targetNode, { attributes: true, childList: true, subtree: true });
     }
-  };
-
-  // Create an observer instance linked to the callback function
-  const widthObserver = new MutationObserver(callback);
-
-  // Start observing the target node for configured mutations
-  for (const targetNode of targetNodes) {
-    widthObserver.observe(targetNode, config);
-  }
-  console.log('Custom script executed');
+    console.log('Custom script executed');
+  })
   </script>
   `;
 
