@@ -23,20 +23,31 @@ const PAGE_DESCRIPTION = "Térence Chateigné's personal website.";
 const GOOGLE_FONT = "Source Sans Pro";
 
 /* Step 5: enter any custom scripts you'd like */
-/*
-  document.addEventListener('DOMContentLoaded', (event) => {
-    $x("//div[@class = 'notion-frame']/div/div/div")[1].style.width = "1200px";
-    $x("//main/div")[0].style.width = "1200px";
-  })
-  */
 const CUSTOM_SCRIPT = `
   // Custom script
   <script>
-  window.addEventListener('load', (event) => {
-    console.log('Custom script executed');
-    document.evaluate('//main/div', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.style.width = '1200px';
-    document.evaluate('//div[@class = "notion-frame"]/div/div/div', document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(1).style.width = '1200px'; 
-  });
+  // Select the node that will be observed for mutations
+  const targetNodes = [
+    document.evaluate('//main/div', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue,
+    document.evaluate('//div[@class = "notion-frame"]/div/div/div', document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null).snapshotItem(1)
+  ];
+
+  // Options for the observer (which mutations to observe)
+  const config = { attributes: true, childList: true, subtree: true };
+
+  // Callback function to execute when mutations are observed
+  const callback = (mutationList, observer) => {
+    console.log('Custom script executed');; 
+    for (const mutation of mutationList) {
+      targetNode.style.width = '1200px'
+    }
+  };
+
+  // Create an observer instance linked to the callback function
+  const observer = new MutationObserver(callback);
+
+  // Start observing the target node for configured mutations
+  observer.observe(targetNode, config);
   </script>
   `;
 
