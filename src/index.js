@@ -140,8 +140,17 @@ async function fetchAndApply(request) {
   url.hostname = "www.notion.so";
   if (url.pathname === "/robots.txt") {
     // Added configuration for robots.txt here
+    let disallowList = ``;
+    for (const path of EXCLUDE_PATHNAMES) {
+      disallowList += `Disallow: ${path}/
+      `;
+    }
     return new Response(
-      `Sitemap: https://${MY_DOMAIN}/sitemap.xml`.replace(/  +/g, "")
+      `
+      User-agent: *
+      ${disallowList}
+
+      Sitemap: https://${MY_DOMAIN}/sitemap.xml`.replace(/  +/g, "")
     );
   }
   if (url.pathname === "/sitemap.xml") {
@@ -185,7 +194,10 @@ async function fetchAndApply(request) {
   } else if (slugs.indexOf(url.pathname.slice(1)) > -1) {
     const pageId = SLUG_TO_PAGE[url.pathname.slice(1)];
     return Response.redirect("https://" + MY_DOMAIN + "/" + pageId, 301);
-  } else if (!(url.pathname.match(/[a-z0-9]{32}$/)[0] in slugs)) {
+  } else if (
+    url.pathname.match(/[a-z0-9]{32}$/).length != 0 &&
+    !(url.pathname.match(/[a-z0-9]{32}$/)[0] in slugs)
+  ) {
     return Response.redirect("https://" + MY_DOMAIN, 301);
   } else {
     // return Response.redirect("https://" + MY_DOMAIN, 301);
