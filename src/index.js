@@ -29,7 +29,7 @@ const CUSTOM_SCRIPT = `
   // Observe body for changes after page loads, resize the content to newSize (900px normally)
   addEventListener('load', () => {
     // Prevent execution on mobile devices
-    if ("ontouchstart" in document.documentElement) {
+    if (!("ontouchstart" in document.documentElement)) {
       const newSize = '1200px'
       const callback = (mutationList, observer) => {
         // Title
