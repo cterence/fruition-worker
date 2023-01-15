@@ -185,6 +185,8 @@ async function fetchAndApply(request) {
   } else if (slugs.indexOf(url.pathname.slice(1)) > -1) {
     const pageId = SLUG_TO_PAGE[url.pathname.slice(1)];
     return Response.redirect("https://" + MY_DOMAIN + "/" + pageId, 301);
+  } else if (!(url.pathname.match(/[a-z0-9]{32}$/)[0] in slugs)) {
+    return Response.redirect("https://" + MY_DOMAIN, 301);
   } else {
     // return Response.redirect("https://" + MY_DOMAIN, 301);
     response = await fetch(url.toString(), {
